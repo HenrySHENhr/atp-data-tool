@@ -46,7 +46,7 @@ class Solr:
         :return:
         """
         url = cls.solr_url + 'update?commitWithin=1000&overwrite=true&wt=json'
-        data = """<add><delete><query>id:"%s"</query></delete><commit/></add>""" % solr_id
+        data = """<add><delete><query>_id:"%s"</query></delete><commit/></add>""" % solr_id
         header = {'Content-type': 'text/xml; charset=utf-8'}
         req = request.Request(url=url, data=data.encode(encoding='utf-8'), headers=header)
         res = request.urlopen(req)

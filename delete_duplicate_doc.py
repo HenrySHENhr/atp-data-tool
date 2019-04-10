@@ -20,18 +20,21 @@ def delete_doc_by_facet():
                     latest_time = -1
                     latest_doc_id = ''
                     for remove_doc in duplicate_docs:
-                        print('date: ' + remove_doc['date'] + ' id: ' + remove_doc['id'])
-                        sec = time.mktime(time.strptime(remove_doc['date'], "%Y-%m-%dT%H:%M:%SZ"))
+                        print('Date: ' + remove_doc['Date'] + ' _id: ' + remove_doc['_id'])
+                        format_time = remove_doc['Date']
+                        if '.' in format_time:
+                            format_time = format_time[:format_time.rindex('.')] + 'Z'
+                        sec = time.mktime(time.strptime(format_time, "%Y-%m-%dT%H:%M:%SZ"))
                         if latest_time == -1:
                             latest_time = sec
-                            latest_doc_id = remove_doc['id']
+                            latest_doc_id = remove_doc['_id']
                         else:
                             if latest_time >= sec:
-                                remove_docs_id.append(remove_doc['id'])
+                                remove_docs_id.append(remove_doc['_id'])
                             else:
                                 remove_docs_id.append(latest_doc_id)
                                 latest_time = sec
-                                latest_doc_id = remove_doc['id']
+                                latest_doc_id = remove_doc['_id']
                     for remove_id in remove_docs_id:
                         print('remove: ' + remove_id)
                         Solr.delete_doc(remove_id)
