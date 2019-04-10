@@ -30,7 +30,7 @@ class Solr:
         This function returns documents by given TC_ID
         :return:
         """
-        url = cls.solr_url + 'select?q=TC_ID:' + tc_id + '&rows=100&alt=json'
+        url = cls.solr_url + 'select?q=TC_ID:' + tc_id + '&rows=' + cls.limit + '&alt=json'
         print(url)
         req = request.Request(url)
         res = request.urlopen(req)
